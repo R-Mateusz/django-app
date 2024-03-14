@@ -29,8 +29,12 @@ class Parking(models.Model):
     parking_spot = models.CharField(choices=PARKING_SPOTS, max_length=10)
     parking_sector = models.CharField(choices=PARKING_SECTOR, max_length=10)
 
+    def __str__(self):
+        return f"Parking: {PARKING_SECTOR.get(str(self.parking_sector))}{PARKING_SPOTS.get(str(self.parking_spot))}"
     class Meta:
         verbose_name_plural = "Parking"
+
+
 
 
 class Car(models.Model):
@@ -38,7 +42,7 @@ class Car(models.Model):
     registration_board = models.CharField(max_length=9, blank=False, null=False)
     registration_start_time = models.DateField(default=default_start_time)
     registration_end_time = models.DateField(default=default_end_time)
-    parking = models.ForeignKey(Parking, on_delete=models.PROTECT, null=False, blank=False, default=None)
+    parking = models.OneToOneField(Parking, on_delete=models.PROTECT, null=False, blank=False, default=None)
 
     class Meta:
         verbose_name_plural = "Car"
