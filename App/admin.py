@@ -9,7 +9,10 @@ from .models import Car, Parking
 class CarAdmin(admin.ModelAdmin):
     list_display = ['registration_board'
         , 'registration_start_time'
-        , 'registration_end_time']
+        , 'registration_end_time'
+
+                    ,'parking_spot_car'
+                    ]
 
     list_filter = ['registration_start_time', 'registration_end_time']
 
