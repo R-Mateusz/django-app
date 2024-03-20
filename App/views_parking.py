@@ -3,7 +3,24 @@ from .serializers.parking_serializer import ParkingSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+
+
 class ParkingView(APIView):
+    def get(self, request):
+        """
+        'GET' method
+        """
+        instance = Parking.objects.all()
+        serializer = ParkingSerializer(instance, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ParkingSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+class ParkingDetailView(APIView):
     """
     class based view
     Inheritance: APIView
@@ -13,8 +30,7 @@ class ParkingView(APIView):
         Retrieve object
         """
         try:
-            instance = Parking.objects.get(pk=pk)
-            return instance
+            return Parking.objects.get(pk=pk)
         except Parking.DoesNotExist:
             return Response(status=404)
 
@@ -26,7 +42,7 @@ class ParkingView(APIView):
         serializer = ParkingSerializer(instance)
         return Response(serializer.data)
 
-    def post(self, request, pk):
+    def post(self, request,pk):
         """
         'POST' method
         """
