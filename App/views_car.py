@@ -4,6 +4,7 @@ from .serializers.car_serializer import CarSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+
 @api_view(['GET', 'POST'])
 def get_obj(request):
     """
@@ -22,6 +23,8 @@ def get_obj(request):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+
 @api_view(['GET', 'POST', 'DELETE'])
 def obj_detail(request, pk):
     """
